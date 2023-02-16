@@ -7,7 +7,7 @@
     "build": "rimraf dist && tsc",
     "start": "npm run migrations && node ./dist/index.js",
     "tsc": "tsc --noEmit",
-    "migrations": "npx prisma db push --name init",
+    "migrations": "npx prisma migrate deploy",
     "format-lint": "prettier --config .prettierrc -l --ignore-unknown .",
     "format-fix": "prettier --config .prettierrc --write --ignore-unknown .",
     "test": "NODE_PATH=./src mocha --require ts-node/register 'src/**/*.test.ts' --timeout 20000 --exit",
