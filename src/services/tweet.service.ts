@@ -53,6 +53,9 @@ export default class TweetService {
           likes: true
         }
       })
+      if(!likes){
+        return next(new CustomError(404, 'General', "Tweet with this Id doesn't exist"));
+      }
       let tweet =await prisma.tweet.update({
         where: {
           id
@@ -67,6 +70,9 @@ export default class TweetService {
   }
   async comment(jwt: number, payload : {tweetId: number, content}, next: NextFunction) {
     try {
+      if(!await prisma.tweet.findFirst({where: {id: payload.tweetId}})){
+        return next(new CustomError(404, 'General', "Tweet with this Id doesn't exist"));
+      }
       let comment = await prisma.comments.create({
         data:{
           content: payload.content
@@ -105,11 +111,15 @@ export default class TweetService {
 
   async deleteTweet(tweetId: number, next: NextFunction) {
     try {
+      if(!await prisma.tweet.findFirst({where: {id: tweetId}})){
+        return next(new CustomError(404, 'General', "Tweet with this Id doesn't exist"));
+      }
       await prisma.tweet.delete({
         where: {
           id: tweetId
         }
       })
+      return { status: 'success' };
     } catch (error) {
       return next(new CustomError(400, 'Raw', 'Error'));
     }
