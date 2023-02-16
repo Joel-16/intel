@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import { Service } from 'typedi';
+import { CustomError } from '../utils/response/custom-error/CustomError';
 
 import TweetService from '../services/tweet.service';
 
@@ -9,7 +10,9 @@ class TweetController {
 
   createTweet = async (req: Request, res: Response, next: NextFunction) => {
     try {
-    
+      if (typeof req.body.content != 'string' || req.body.content.length === 0) {
+        next(new CustomError(400, 'Validation', "content is required"))
+      }
       res.customSuccess(200, await this.tweetService.createTweet(req.jwtPayload.id,req.body.content, next));
     } catch {
       next();
@@ -26,6 +29,9 @@ class TweetController {
 
   likeTweet = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      if (isNaN(Number(req.params.id))) {
+        next(new CustomError(400, 'Validation', "id of tweet is required"))
+      }
       res.customSuccess(200, await this.tweetService.likeTweet(Number(req.params.id), next));
     } catch {
       next();
@@ -42,6 +48,9 @@ class TweetController {
 
   deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      if (isNaN(Number(req.params.id))) {
+        next(new CustomError(400, 'Validation', "id of tweet is required"))
+      }
       res.customSuccess(200, await this.tweetService.deleteTweet(Number(req.params.id), next));
     } catch {
       next();
