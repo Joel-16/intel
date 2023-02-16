@@ -42,7 +42,7 @@ class TweetController {
 
   deleteTweet = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.customSuccess(200, await this.tweetService.deleteTweet(req.body.tweetId, next));
+      res.customSuccess(200, await this.tweetService.deleteTweet(Number(req.params.id), next));
     } catch {
       next();
     }
