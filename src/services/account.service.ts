@@ -166,7 +166,7 @@ export class AccountService {
           },
         });
       }, 900000);
-      return { message: 'Please input the code sent to your mail' };
+      return { message: 'A code has been sent to your mail, use it to reset your password' };
     } catch (error) {
       console.log(error);
       return next(new CustomError(500, 'Raw', 'Internal server error'));
