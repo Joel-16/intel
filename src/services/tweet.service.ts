@@ -68,7 +68,7 @@ export default class TweetService {
       return next(new CustomError(400, 'Raw', 'Error'));
     }
   }
-  async comment(jwt: number, payload : {tweetId: number, content}, next: NextFunction) {
+  async comment(jwt: number, payload : {tweetId: number, content: string}, next: NextFunction) {
     try {
       if(!await prisma.tweet.findFirst({where: {id: payload.tweetId}})){
         return next(new CustomError(404, 'General', "Tweet with this Id doesn't exist"));

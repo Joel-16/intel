@@ -40,6 +40,12 @@ class TweetController {
 
   comment = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      if (typeof req.body.content != 'string' || req.body.content.length === 0) {
+        next(new CustomError(400, 'Validation', "content is required"))
+      }
+      if (isNaN(Number(req.body.tweetId))) {
+        next(new CustomError(400, 'Validation', "id of tweet is required"))
+      }
       res.customSuccess(200, await this.tweetService.comment(req.jwtPayload.id, req.body, next));
     } catch {
       next();
