@@ -23,7 +23,7 @@ function sendEmail(email: string, text: string, subject: string) {
   const info = {
     from: {
       name: "Twitee",
-      address: 'info@twita.com',
+      address: 'inaku.j@qlabafrica.com',
     },
     to: email,
     subject: subject,
