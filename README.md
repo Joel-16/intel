@@ -11,7 +11,7 @@ _Easily set up a local development environment with these commands!_
 
 - clone the repo
 - `npm install` 🚀
-- create env file containing the database connection street under the key: DATABASE_URL
+- create env file containing the postgres database connection string under the key: DATABASE_URL
 - `npm run build` 🚀
 - `npm start` 🚀
 
